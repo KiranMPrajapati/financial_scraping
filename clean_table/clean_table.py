@@ -290,7 +290,7 @@ def clean_table(data_dir, output_dir):
     batches = os.listdir(data_dir)
     batches = sorted(batches, key=sort_key)
     # batches = ["Batch_0.parquet"]
-    for batch in batches[74:]:
+    for batch in batches[:]:
         df = pd.read_parquet(f'{data_dir}/{batch}')
         df = df[df['page_number']>2]
         # df[['clean_content', 'csv_string', 'csv_string_with_header', 'multiple_tables']] = df['page_content'].apply(replace_with_clean_table)

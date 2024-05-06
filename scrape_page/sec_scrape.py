@@ -20,7 +20,7 @@ import pyarrow
 from pandas import DataFrame
 from logger_file import setup_logs
 import threading
-from sec_code.config import api
+from config import api
 
 logger = setup_logs()
 logger.info(f"Logger initialized successfully in file")

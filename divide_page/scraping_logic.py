@@ -19,9 +19,12 @@ def modified_split(cik_name: str, date: str, url, contents):
     try:
         soup = BeautifulSoup(contents, 'html.parser')
         soupbody = soup.body
-        headers = soupbody.find_all('ix:header')
-        for header in headers:
-            header.extract()
+        try:
+            headers = soupbody.find_all('ix:header')
+            for header in headers:
+                header.extract()
+        except Exception as e:
+            print(e)
         pattern = re.compile(r"(?:page-break-after:\s*always|page-break-before:\s*always|break-before:\s*page)", re.IGNORECASE)
         for tag in soupbody.find_all(True, recursive=True): 
             if 'style' in tag.attrs and pattern.search(tag['style']):
@@ -91,7 +94,7 @@ def divide_page(data_dir, output_dir):
     logger.info("Cleaning contents Started")
     batches = os.listdir(data_dir)
     file_names = sorted(batches, key=sort_key)
-    for filename in file_names:
+    for filename in file_names[:35]:
         if filename.endswith(".parquet"):
             logger.info(f"Processing file: {filename}")
             input_file_path = os.path.join(data_dir, filename)
